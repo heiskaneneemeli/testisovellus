@@ -2,6 +2,18 @@
 <?php include('header.php'); ?>
 <?php include('dbcon.php'); ?>
 
+       <?php
+
+        session_start(); // Toivottaa käyttäjän tervetulleeksi
+
+                if(isset($_SESSION['username'])) 
+                {
+                    echo '<div class="header" style="font-size: 30px; text-align: center;">';
+                    echo 'Tervetuloa, ' . $_SESSION['username'];
+                    echo '</div>';
+                }
+        ?>
+
         <div class="boxi">
             <h2>OPPILAAT</h2>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">LISÄÄ OPPILAS</button>
