@@ -32,7 +32,7 @@ if(isset($_POST['lisää_oppilas']))
     }
         
     // tarkista että nimi on muodossa "Etunimi Sukunimi"
-    else if(!preg_match("/^[A-Z][a-z]* [A-Z][a-z]*$/", $e_nimi . " " . $s_nimi))
+    else if(!preg_match("/^[A-ZÄÖÅ][a-zäöå]* [A-ZÄÖÅ][a-zäöå]*$/u", $e_nimi . " " . $s_nimi))
     {
         header('location:kotisivu.php?message=Nimen täytyy olla muodossa "Etunimi Sukunimi"');
     }
