@@ -18,6 +18,7 @@
         {
             session_start();
             $_SESSION['user_id'] = $row['id'];
+            $_SESSION['username'] = $käyttäjätunnus;
             header("location:kotisivu.php");
         }
 
