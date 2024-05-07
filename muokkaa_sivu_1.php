@@ -4,7 +4,7 @@
 
 <?php
 
-    if(isset($_GET['id']))
+    if(isset($_GET['id']) && !empty($_GET['id']))
     {
         $id = $_GET['id'];
     
@@ -34,24 +34,60 @@
             {
                 $idnew = $_GET['id_new'];
             }
+             
+            else
+            {
+                $idnew = $id;
+            }
 
             $e_nimi = $_POST['e_nimi'];
             $s_nimi = $_POST['s_nimi'];
             $ika = $_POST['ika'];
 
-            $query = "update oppilaat set etunimi = '$e_nimi', sukunimi = '$s_nimi', age = '$ika' where id = '$idnew'";
+            // vahvistaa onko annettu kaikki arvot
+            if($e_nimi == "" || empty ($e_nimi))
+            {
+                header('location:muokkaa_sivu_1.php?id=' . $idnew . '&virhe=Anna etunimi');
+            }
 
-            $result = mysqli_query($connection, $query);
+            else if($s_nimi == "" || empty ($s_nimi))
+            {
+                header('location:muokkaa_sivu_1.php?id=' . $idnew . '&virhe=Anna sukunimi');
+            }
+
+            else if($ika == "" || empty ($ika))
+            {
+                header('location:muokkaa_sivu_1.php?id=' . $idnew . '&virhe=Anna ikä');
+            }
+
+            // tarkista että ikä on välillä 1-99
+            else if(!filter_var($ika, FILTER_VALIDATE_INT, array("options" => array("min_range"=>1, "max_range"=>99))))
+            {
+                header('location:muokkaa_sivu_1.php?id=' . $idnew . '&virhe=Iän täytyy olla 1-99');
+            }
+        
+            // tarkista että nimi on muodossa "Etunimi Sukunimi"
+            else if(!preg_match("/^[A-ZÄÖÅ][a-zäöå]* [A-ZÄÖÅ][a-zäöå]*$/u", $e_nimi . " " . $s_nimi))
+            {
+                header('location:muokkaa_sivu_1.php?id='. $idnew .'&virhe=Nimen täytyy olla muodossa "Etunimi Sukunimi"');
+            }
+                
+            else
+            {
+                $query = "update oppilaat set etunimi = '$e_nimi', sukunimi = '$s_nimi', age = '$ika' where id = '$idnew'";
+
+                $result = mysqli_query($connection, $query);
 
                 if(!$result)
                 {
-                    die("query virhe".mysqli_error());
+                        die("query virhe".mysqli_error());
                 }
 
                 else
                 {
                     header('location:kotisivu.php?muokkaa_msg=Oppilaan muokkaus onnistui');
                 }
+            }
         }
 
     ?>
@@ -66,7 +102,7 @@
                      exit();
                }
 
-     ?>
+    ?>
     
     <!-- Muokkaus sivun kaavake -->
     <form action="muokkaa_sivu_1.php?id_new=<?php echo $id; ?>" method="post">
@@ -82,7 +118,16 @@
             <label for="ika">Ikä</label>
             <input type="text" name="ika" class="form-control" value="<?php echo $row['age'] ?>">
         </div>
-        <input type="submit" class="btn btn-success" name="muokkaa_oppilas" value="MUOKKAA">
+        <input type="submit" style="margin-top: 10px;" class="btn btn-success" name="muokkaa_oppilas" value="MUOKKAA">
     </form>
+
+    <?php 
+
+                if(isset($_GET['virhe']))
+                {
+                    echo "<h6>".$_GET['virhe']."</h6>";
+                }
+
+     ?>
 
 <?php include('footer.php'); ?>
