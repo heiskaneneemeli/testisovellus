@@ -29,4 +29,13 @@
     
     ?>
 
+    <?php 
+
+    if(isset($_GET['viesti']))
+    {
+        echo "<h6>".$_GET['viesti']."</h6>";
+    }
+
+    ?>
+
 <?php include('footer.php'); ?>
