@@ -2,9 +2,9 @@
 <?php include('header.php'); ?>
 <?php include('dbcon.php'); ?>
 
-       <?php
+        <?php
 
-        session_start(); // Toivottaa käyttäjän tervetulleeksi
+        session_start();
 
                 if(isset($_SESSION['username'])) 
                 {
@@ -18,7 +18,7 @@
             <h2>OPPILAAT</h2>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">LISÄÄ OPPILAS</button>
             <form method="post">
-                 <input type="submit" style="margin-left: 10px;" class="btn btn-danger" name="logout" value="KIRJAUDU ULOS">
+                 <input type="submit" style="margin-left: 875px;" class="btn btn-danger" name="logout" value="KIRJAUDU ULOS">
             </form>
         </div>
 
@@ -141,7 +141,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">LISÄÄ OPPILAS</h5>
+                        <h4 class="modal-title" id="exampleModalLabel">LISÄÄ OPPILAS</h4>
                         </button>
                     </div>
                     

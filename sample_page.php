@@ -3,7 +3,7 @@
 
         <div class="boxi">
             <h2>OPPILAAT</h2>
-            <input type="button" style="margin-left: 10px;" class="btn btn-success" onclick="location='index.php'" value="KIRJAUDU SISÄÄN">
+            <button class="btn btn-success" onclick="location='index.php'">KIRJAUDU SISÄÄN</button>
         </div>
 
         <!-- taulukko -->
